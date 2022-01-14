@@ -3,15 +3,18 @@ import { ClassRocket, FunctionalRocket } from './Rocket';
 import '../styles/_launchpad.scss';
 
 export default function LaunchPad() {
-  const [, triggerRerender] = useState(Date.now());
-  
+  const [, triggerRerender] = useState();
+
   useEffect(() => {
-    setInterval(() => { triggerRerender(Date.now()); }, 500);
+    const launch = setInterval(() => { triggerRerender(Date.now()) }, 500);
+    console.log("launching..")
+    return () => clearInterval(launch)
   }, [])
-  
+
   return (
     <div className="launchpad">
       <FunctionalRocket />
+      <ClassRocket />
     </div>
   );
 }
