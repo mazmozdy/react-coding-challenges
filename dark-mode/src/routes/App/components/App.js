@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import '../styles/_app.scss';
+import '../../../styles/_dark-mode.scss';
+import DarkModeContext from '../context/DarkMode';
+
 
 function App() {
+  const darkctx = useContext(DarkModeContext)
+
   return (
-    <div className="app">
+    <div className={"app " + darkctx.theme.class}>
       <div className="level">
         <div>
           <h1 className="title">Dark Mode Challenge</h1>
         </div>
 
-        {/* --The button that should toggle dark mode-- */}
-        <button className="app__dark-mode-btn icon level-right">
-          <FontAwesomeIcon icon={faMoon} />
-        </button>
+        {
+          /* --The button that should toggle dark mode-- */
+          darkctx.theme.isDark ?
+            <button className="app__dark-mode-btn icon level-right" style={{ color: "#FFA500" }}>
+              <FontAwesomeIcon icon={faSun} onClick={darkctx.turnLight} />
+            </button>
+            :
+            <button className="app__dark-mode-btn icon level-right" >
+              <FontAwesomeIcon icon={faMoon} onClick={darkctx.turnDark} />
+            </button>
+        }
 
       </div>
 
@@ -41,8 +53,8 @@ function App() {
 
       <section className="section">
         <div className="buttons level-right">
-          <a className="button is-primary">Save</a>
-          <a className="button is-link">Submit</a>
+          <button className="button is-primary">Save</button>
+          <button className="button is-link">Submit</button>
         </div>
       </section>
     </div>
